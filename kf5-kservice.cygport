@@ -1,0 +1,36 @@
+inherit kf5
+
+NAME="kf5-kservice"
+VERSION=5.9.0
+RELEASE=1
+CATEGORY="Libs"
+SUMMARY="KDE 5 service library"
+DESCRIPTION="KService provides a plugin framework for handling desktop services.
+Services can be applications or libraries. They can be bound to MIME types or
+handled by application specific code."
+
+src_install() {
+	cd ${B}
+	kf5_install
+
+	mv ${D}/etc/xdg/menus/{,kf5-}applications.menu
+}
+
+PKG_NAMES="libKF5Service5 libKF5Service-devel"
+libKF5Service5_CONTENTS="
+	etc/xdg/menus/kf5-applications.menu
+	usr/bin/cygKF5Service-5.dll
+	usr/bin/kbuildsycoca5.exe
+	usr/share/doc/
+	usr/share/kservicetypes5/
+	usr/share/locale/
+	usr/share/man/
+"
+libKF5Service_devel_REQUIRES="libKF5Config-devel libKF5CoreAddons-devel libKF5DBusAddons-devel libKF5I18n-devel libQt5Core-devel"
+libKF5Service_devel_CONTENTS="
+	usr/include/KF5/KService/
+	usr/include/KF5/kservice_version.h
+	usr/lib/cmake/KF5Service/
+	${QT5_MKSPECSDIR#/}/modules/qt_KService.pri
+	usr/lib/libKF5Service.dll.a
+"
